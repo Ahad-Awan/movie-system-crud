@@ -6,6 +6,9 @@ let date = new Date();
 let localDate = date.toLocaleDateString();
 let editingRow = null;
 
+let time = date.getTime();
+console.log(time);
+
 function addMovie() {
   let movieTitle = document.getElementById("movie-title").value;
   let movieGenre = document.getElementById("movie-genre").value;
@@ -22,7 +25,8 @@ function addMovie() {
     rating: movieRating,
     date: localDate,
   };
-  // console.log(movie.localDate);
+
+  movies.sort((a, b) => new Date(b.localDate) - new Date(a.localDate));
 
   if (editingRow) {
     updateMovie(movieTitle, movieGenre, movieRating);
