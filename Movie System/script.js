@@ -4,10 +4,10 @@ let tableBody = document.getElementById("body");
 let searchInput = document.getElementById("search");
 let date = new Date();
 let localDate = date.toLocaleDateString();
-let editingRow = null;
+// let localTime = date.toLocaleTimeString();
+// console.log(localTime);
 
-let time = date.getTime();
-console.log(time);
+let editingRow = null;
 
 function addMovie() {
   let movieTitle = document.getElementById("movie-title").value;
@@ -18,27 +18,29 @@ function addMovie() {
     alert("Please enter movie name, genre, and rating.");
     return;
   }
+  let currentTime = new Date().toLocaleTimeString();
 
   let movie = {
     title: movieTitle,
     genre: movieGenre,
     rating: movieRating,
-    date: localDate,
+    time: currentTime,
   };
 
-  movies.sort((a, b) => new Date(b.localDate) - new Date(a.localDate));
+  // movies.sort((a, b) => new Date(b.localDate) - new Date(a.localDate));
+  movies.sort((a, b) => new Date(b.time) - new Date(a.time));
 
   if (editingRow) {
-    updateMovie(movieTitle, movieGenre, movieRating);
+    updateMovie(movieTitle, movieGenre, movieRating, currentTime);
   } else {
     movies.push(movie);
-    createMovieRow(movieTitle, movieGenre, movieRating);
+    createMovieRow(movieTitle, movieGenre, movieRating, currentTime);
   }
 
   clearInputs();
 }
 
-function createMovieRow(title, genre, rating) {
+function createMovieRow(title, genre, rating, currentTime) {
   let tr = document.createElement("tr");
   let td1 = document.createElement("td");
   let td2 = document.createElement("td");
@@ -49,7 +51,7 @@ function createMovieRow(title, genre, rating) {
   td1.innerText = title;
   td2.innerText = genre;
   td3.innerText = rating;
-  td5.innerText = localDate;
+  td5.innerText = currentTime;
 
   let btnEdit = document.createElement("button");
   let btnDelete = document.createElement("button");
@@ -80,9 +82,11 @@ function editMovie(row) {
 }
 
 function updateMovie(title, genre, rating) {
+  let updatedTime = new Date().toLocaleTimeString();
   editingRow.children[0].innerText = title;
   editingRow.children[1].innerText = genre;
   editingRow.children[2].innerText = rating;
+  editingRow.children[4].innerText = updatedTime;
 
   btn.innerText = "Add Movie";
   editingRow = null;
@@ -122,7 +126,7 @@ searchInput.addEventListener("input", () => {
   );
   tableBody.innerHTML = "";
   filteredMovie.forEach((movie) => {
-    createMovieRow(movie.title, movie.genre, movie.rating);
+    createMovieRow(movie.title, movie.genre, movie.rating, movie.time);
   });
 });
 
