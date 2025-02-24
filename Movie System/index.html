@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Movie Recommendation System</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Movie Recommendation System</h1>
+
+      <div id="addMovie">
+        <label for="movie-title">Movie Title</label>
+        <input type="text" id="movie-title" required /> <br />
+        <label for="movie-title">Movie Genre</label>
+        <input type="text" id="movie-genre" required /> <br />
+        <label for="rating">Movie Rating</label>
+        <input type="number" id="rating" min="1" max="5" required />
+        <button id="btn">Add Movie</button>
+      </div>
+    </div>
+    <input type="text" id="search" placeholder="Search.." />
+    <table id="display">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Genre</th>
+          <th>Rating</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="body"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+  </body>
+</html>

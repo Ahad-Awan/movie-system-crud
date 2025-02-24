@@ -1,0 +1,193 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #f9f9f9, #e3f2fd);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.container {
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+}
+
+h1 {
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+#addMovie {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+input {
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: calc(100% - 24px);
+  font-size: 16px;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s, transform 0.1s;
+}
+
+button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 14px;
+  text-align: center;
+  font-size: 16px;
+}
+
+th {
+  background: #007bff;
+  color: white;
+  font-size: 18px;
+}
+
+td button {
+  margin: 5px;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+td button:first-child {
+  background: #28a745;
+}
+
+td button:first-child:hover {
+  background: #218838;
+}
+
+td button:last-child {
+  background: #dc3545;
+}
+
+td button:last-child:hover {
+  background: #c82333;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .container {
+    width: 95%;
+    padding: 20px;
+  }
+  input {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 18px;
+  }
+  input {
+    width: calc(100% - 20px);
+    font-size: 14px;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  th,
+  td {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+  button {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 14px;
+    padding: 10px;
+  }
+  input {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+  th,
+  td {
+    padding: 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    width: 100%;
+    padding: 10px;
+  }
+  button {
+    font-size: 12px;
+    padding: 8px;
+  }
+  input {
+    font-size: 12px;
+    padding: 8px;
+  }
+  th,
+  td {
+    padding: 6px;
+    font-size: 10px;
+  }
+}
