@@ -2,7 +2,8 @@ let movies = [];
 let btn = document.getElementById("btn");
 let tableBody = document.getElementById("body");
 let searchInput = document.getElementById("search");
-
+let date = new Date();
+let localDate = date.toLocaleDateString();
 let editingRow = null;
 
 function addMovie() {
@@ -15,8 +16,13 @@ function addMovie() {
     return;
   }
 
-  let movie = { title: movieTitle, genre: movieGenre, rating: movieRating };
-  console.log(movies);
+  let movie = {
+    title: movieTitle,
+    genre: movieGenre,
+    rating: movieRating,
+    date: localDate,
+  };
+  // console.log(movie.localDate);
 
   if (editingRow) {
     updateMovie(movieTitle, movieGenre, movieRating);
@@ -34,10 +40,12 @@ function createMovieRow(title, genre, rating) {
   let td2 = document.createElement("td");
   let td3 = document.createElement("td");
   let td4 = document.createElement("td");
+  let td5 = document.createElement("td");
 
   td1.innerText = title;
   td2.innerText = genre;
   td3.innerText = rating;
+  td5.innerText = localDate;
 
   let btnEdit = document.createElement("button");
   let btnDelete = document.createElement("button");
@@ -54,7 +62,7 @@ function createMovieRow(title, genre, rating) {
   });
 
   td4.append(btnEdit, btnDelete);
-  tr.append(td1, td2, td3, td4);
+  tr.append(td1, td2, td3, td4, td5);
   tableBody.appendChild(tr);
 }
 
