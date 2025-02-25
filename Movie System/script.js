@@ -4,8 +4,6 @@ let tableBody = document.getElementById("body");
 let searchInput = document.getElementById("search");
 let date = new Date();
 let localDate = date.toLocaleDateString();
-// let localTime = date.toLocaleTimeString();
-// console.log(localTime);
 
 let editingRow = null;
 
@@ -34,8 +32,12 @@ function addMovie() {
     updateMovie(movieTitle, movieGenre, movieRating, currentTime);
   } else {
     movies.push(movie);
-    createMovieRow(movieTitle, movieGenre, movieRating, currentTime);
+    // createMovieRow(movieTitle, movieGenre, movieRating, currentTime);
   }
+  tableBody.innerHTML = "";
+  movies.forEach((movie) => {
+    createMovieRow(movie.title, movie.genre, movie.rating, movie.time);
+  });
 
   clearInputs();
 }
