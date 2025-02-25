@@ -2,8 +2,6 @@ let movies = [];
 let btn = document.getElementById("btn");
 let tableBody = document.getElementById("body");
 let searchInput = document.getElementById("search");
-let date = new Date();
-let localDate = date.toLocaleDateString();
 
 let editingRow = null;
 
@@ -16,33 +14,28 @@ function addMovie() {
     alert("Please enter movie name, genre, and rating.");
     return;
   }
-  let currentTime = new Date().toLocaleTimeString();
+
+  let currentTime = Date.now(); // Store timestamp instead of string
 
   let movie = {
     title: movieTitle,
     genre: movieGenre,
     rating: movieRating,
-    time: currentTime,
+    time: currentTime, // Timestamp for sorting
   };
-
-  // movies.sort((a, b) => new Date(b.localDate) - new Date(a.localDate));
-  movies.sort((a, b) => new Date(b.time) - new Date(a.time));
 
   if (editingRow) {
     updateMovie(movieTitle, movieGenre, movieRating, currentTime);
   } else {
     movies.push(movie);
-    // createMovieRow(movieTitle, movieGenre, movieRating, currentTime);
+    sortMovies(); // Sort movies after adding
+    renderMovies(); // Re-render table
   }
-  tableBody.innerHTML = "";
-  movies.forEach((movie) => {
-    createMovieRow(movie.title, movie.genre, movie.rating, movie.time);
-  });
 
   clearInputs();
 }
 
-function createMovieRow(title, genre, rating, currentTime) {
+function createMovieRow(movie) {
   let tr = document.createElement("tr");
   let td1 = document.createElement("td");
   let td2 = document.createElement("td");
@@ -50,10 +43,10 @@ function createMovieRow(title, genre, rating, currentTime) {
   let td4 = document.createElement("td");
   let td5 = document.createElement("td");
 
-  td1.innerText = title;
-  td2.innerText = genre;
-  td3.innerText = rating;
-  td5.innerText = currentTime;
+  td1.innerText = movie.title;
+  td2.innerText = movie.genre;
+  td3.innerText = movie.rating;
+  td5.innerText = new Date(movie.time).toLocaleTimeString(); // Convert timestamp to readable time
 
   let btnEdit = document.createElement("button");
   let btnDelete = document.createElement("button");
@@ -83,12 +76,19 @@ function editMovie(row) {
   btn.innerText = "Update Movie";
 }
 
-function updateMovie(title, genre, rating) {
-  let updatedTime = new Date().toLocaleTimeString();
+function updateMovie(title, genre, rating, time) {
+  let updatedTime = Date.now();
   editingRow.children[0].innerText = title;
   editingRow.children[1].innerText = genre;
   editingRow.children[2].innerText = rating;
-  editingRow.children[4].innerText = updatedTime;
+  editingRow.children[4].innerText = new Date(updatedTime).toLocaleTimeString();
+
+  let index = movies.findIndex((movie) => movie.title === title);
+  if (index !== -1) {
+    movies[index] = { title, genre, rating, time: updatedTime };
+    sortMovies();
+    renderMovies();
+  }
 
   btn.innerText = "Add Movie";
   editingRow = null;
@@ -99,13 +99,24 @@ function deleteMovie(row) {
     (movie) => movie.title === row.children[0].innerText
   );
   if (index !== -1) movies.splice(index, 1);
-  row.remove();
+  renderMovies(); // UI update after deletion
 }
 
 function clearInputs() {
   document.getElementById("movie-title").value = "";
   document.getElementById("movie-genre").value = "";
   document.getElementById("rating").value = "";
+}
+
+// Sort movies based on time (latest first)
+function sortMovies() {
+  movies.sort((a, b) => b.time - a.time);
+}
+
+// Render movies after sorting
+function renderMovies() {
+  tableBody.innerHTML = "";
+  movies.forEach((movie) => createMovieRow(movie));
 }
 
 // Click event on Add/Update button
@@ -118,34 +129,12 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
-// Search functionality using filter()
-
+// Search functionality
 searchInput.addEventListener("input", () => {
   let input = searchInput.value.toLowerCase();
-  console.log(input);
-  let filteredMovie = movies.filter((movie) =>
+  let filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(input)
   );
   tableBody.innerHTML = "";
-  filteredMovie.forEach((movie) => {
-    createMovieRow(movie.title, movie.genre, movie.rating, movie.time);
-  });
+  filteredMovies.forEach((movie) => createMovieRow(movie));
 });
-
-// Search functionality
-// function searchMovie() {
-//   let input = searchInput.value.toLowerCase();
-//   let rows = tableBody.getElementsByTagName("tr");
-
-//   for (let i = 0; i < rows.length; i++) {
-//     let title = rows[i].getElementsByTagName("td")[0].innerText.toLowerCase();
-
-//     if (title.includes(input)) {
-//       rows[i].style.display = "";
-//     } else {
-//       rows[i].style.display = "none";
-//     }
-//   }
-// }
-
-// searchInput.addEventListener("input", searchMovie);
