@@ -15,21 +15,21 @@ function addMovie() {
     return;
   }
 
-  let currentTime = Date.now(); // Store timestamp instead of string
+  let currentTime = Date.now();
 
   let movie = {
     title: movieTitle,
     genre: movieGenre,
     rating: movieRating,
-    time: currentTime, // Timestamp for sorting
+    time: currentTime,
   };
 
   if (editingRow) {
     updateMovie(movieTitle, movieGenre, movieRating, currentTime);
   } else {
     movies.push(movie);
-    sortMovies(); // Sort movies after adding
-    renderMovies(); // Re-render table
+    sortMovies();
+    renderMovies();
   }
 
   clearInputs();
@@ -46,7 +46,7 @@ function createMovieRow(movie) {
   td1.innerText = movie.title;
   td2.innerText = movie.genre;
   td3.innerText = movie.rating;
-  td5.innerText = new Date(movie.time).toLocaleTimeString(); // Convert timestamp to readable time
+  td5.innerText = new Date(movie.time).toLocaleTimeString();
 
   let btnEdit = document.createElement("button");
   let btnDelete = document.createElement("button");
@@ -99,7 +99,7 @@ function deleteMovie(row) {
     (movie) => movie.title === row.children[0].innerText
   );
   if (index !== -1) movies.splice(index, 1);
-  renderMovies(); // UI update after deletion
+  renderMovies();
 }
 
 function clearInputs() {
